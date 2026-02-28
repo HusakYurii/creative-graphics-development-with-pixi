@@ -2,6 +2,12 @@
 ---
 The first one is `defaultVergtex` and it is a string constant which gets exported from the PIXI library and is being used as "Standard object rendering shader".
 
+__IMPORTANT ⚠️__ 
+
+It is said that this default vertex shader was used in PIXI.js v4 but starting from 5th version they don't use it. If you use it in PIXI v5 and up the compiler detects `aTextureCoord` and switches to v4-compatibility mode that adds old filter uniforms.
+This vertex shader is used for compatibility when porting from v4.
+I hope this link is sill woring [v5 Creating filters](https://github.com/pixijs/pixijs/wiki/v5-Creating-filters#v4-vertex-shader)
+
 ```glsl
 attribute vec2 aVertexPosition;
 attribute vec2 aTextureCoord;
@@ -52,6 +58,7 @@ Those attributes start at `{ x: 0 , y: 0 }` which is TOP-LEFT corner of a pixi o
 
 
 __Example__
+
 Here I create a plane using graphics and color pixes which start form top-left until they are in the radius of 0.5 (half of the pixi object size)
 ```typescript
 import { Filter, defaultVertex } from 'pixi.js';
@@ -92,8 +99,10 @@ The result in the browser
 ---
 The second default vertex shader is `defaultFilterVertex` and it is used only for "Filter system shader" - and it is also can be used in your custom filters - confusing right? This one is more complex because filters operate differently.
 
-__Notice ⚠️__ There is NO aTextureCoord attribute - that's the key difference. Plus it has more uniforms
+__IMPORTANT ⚠️__ 
 
+There is NO aTextureCoord attribute - that's the key difference. Plus it has more uniforms. This default vertex shader is sued in PIXI.js v5 and up. If I understood correctly this shader can handle data lookup in 5 different coordination system
+This one is prefered default vertex shader they sugges to use [v5-Creating-filters](https://github.com/pixijs/pixijs/wiki/v5-Creating-filters)
 
 
 ```glsl
@@ -124,4 +133,6 @@ void main(void)
 }
 
 ```
+
+When I cimpared those two in simple set-ups where I had  a sprite and the other one with the contaienr which had 2 sprites - the result was the same. 
 
