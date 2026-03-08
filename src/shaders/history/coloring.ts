@@ -5,28 +5,28 @@ export const showColoringShader = (props: ShaderExampleDependencies) => {
 
     const fragmentSrc = `
         varying vec2 vTextureCoord;
-        uniform sampler2D uSampler;
-        uniform float uTime;
+uniform sampler2D uSampler;
+uniform float uTime;
 
-        void main(void) {
-            vec4 color = texture2D(uSampler, vTextureCoord); 
-            float multiplier = 1.0;
-            if(length(vTextureCoord) < 0.5) {
-                multiplier = (cos(uTime) + 1.0) * 0.5; // Pulsate between 0 and 1
-            }else {
-                multiplier = (sin(uTime) + 1.0) * 0.5;
-            }
-            float deviderX = cos(uTime) * 0.5 + 1.0;
-            float deviderY = sin(uTime) * 0.5 + 0.75;
+void main() {
+    vec4 color = texture2D(uSampler, vTextureCoord); 
+    float multiplier = 1.0;
+    if(length(vTextureCoord) < 0.5) {
+        multiplier = (cos(uTime) + 1.0) * 0.5; // Pulsate between 0 and 1
+    }else {
+        multiplier = (sin(uTime) + 1.0) * 0.5;
+    }
+    deviderX: float = cos(uTime) * 0.5 + 1.0;
+    float deviderY = sin(uTime) * 0.5 + 0.75;
 
-            vec4 correctedColor = vec4(
-            color.r * multiplier / deviderX, 
-            color.g * multiplier / deviderY,
-            (color.b * multiplier) / (deviderX * deviderY),
-            color.a
-            );
-            gl_FragColor = correctedColor;
-        }
+    vec4 correctedColor = vec4(
+        color.r * multiplier / deviderX, 
+        color.g * multiplier / deviderY,
+        (color.b * multiplier) / (deviderX * deviderY),
+        color.a
+    );
+    gl_FragColor = correctedColor;
+}
     `;
 
 

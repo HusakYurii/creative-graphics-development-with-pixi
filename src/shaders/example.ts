@@ -11,7 +11,7 @@ export const showExampleShader = (props: ShaderExampleDependencies) => {
         uniform sampler2D uSampler;
         uniform float uTime;
 
-        void main(void) {
+        void main() {
             float b = (cos(uTime) + 1.0) * 0.5; // Normalize to 0-1 range
             gl_FragColor = vec4(vTextureCoord.r, vTextureCoord.g, b, 1.0);
         }

@@ -30,6 +30,7 @@
     "isolatedModules": true
   },
   "include": [
-    "src"
+    "src",
+    "src/plugin/types",
   ]
 }
