@@ -1,0 +1,9 @@
+varying vTextureCoord: vec2;
+uniform uSampler: sampler2D;
+uniform uTime: float;
+
+function main(): void {
+    var cosValue: float = (cos(uTime) + 1.0) * 0.5;
+    var r: float = mod(vTextureCoord.x, 0.2) * (5.0 * cosValue);
+    gl_FragColor = vec4(r, 0.0, 1.0, 1.0);
+}

@@ -1,15 +1,16 @@
-import { Filter, defaultVertex, Ticker, Graphics } from 'pixi.js';
-import type { ShaderExampleDependencies } from '../../interfaces';
-import fragmentSrc from './fragmentShader.tglsl';
+import { Filter, Ticker, Graphics } from 'pixi.js';
+import type { ShaderExampleDependencies } from '../interfaces';
+import fragmentShader from './fragmentShader.tglsl';
+import vertexShader from './vertexShader.tglsl';
 
 export const showExampleTGLSLShader = (props: ShaderExampleDependencies) => {
 
-    const filter = new Filter(defaultVertex, fragmentSrc, {
-        uTime: 0
+    const filter = new Filter(vertexShader, fragmentShader, {
+        uTime: 0,
     });
 
     const update = (ticekr: Ticker) => {
-        filter.uniforms.uTime = ticekr.lastTime / 1000; // Convert to seconds
+        filter.uniforms.uTime = ticekr.lastTime / 1000;
     };
 
     const graphics = new Graphics();

@@ -1,10 +1,11 @@
 
 import { createApp } from '../core/createApp';
 import { useResize } from '../core/useResize';
-import { showGrayscaleShader } from './history/grayscale';
-import { showColoringShader } from './history/coloring';
+import { showGrayscaleShader } from './practice/grayscale';
+import { showColoringShader } from './practice/coloring';
 import { showExampleShader } from './example';
-import { showExampleTGLSLShader } from './history/tglsl/exampleWithTGLSL';
+import { showDrawingShaders } from './practice/drawing';
+import { showExampleTGLSLShader } from './tglsl/exampleWithTGLSL';
 
 const initGame = async () => {
 
@@ -26,7 +27,10 @@ const initGame = async () => {
     // await showGrayscaleShader({ app, onUpdate });
     // showColoringShader({ app, onUpdate });
     // showExampleShader({ app, onUpdate });
+    // showDrawingShaders({ app, onUpdate })
     showExampleTGLSLShader({ app, onUpdate });
+
+
 };
 
 initGame();
