@@ -1,3 +1,3 @@
 import './style.css'
-// import './example';
-import './shaders/main';
+// import './core/example';
+// import './shaders/main';
