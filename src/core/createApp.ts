@@ -22,7 +22,7 @@ interface ApplicationAPI {
     destroy: () => void;
 }
 
-export async function createApp(options: CreateAppOptions = {}): Promise<ApplicationAPI> {
+export function createApp(options: CreateAppOptions = {}): ApplicationAPI {
     const container = options.container ?? document.body;
 
     const app = new Application<HTMLCanvasElement>({

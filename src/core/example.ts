@@ -2,7 +2,7 @@ import { createApp } from './createApp';
 import { useBundlesLoader, type BundlesLoaderOptions } from './useBundlesLoader';
 import { useResize } from './useResize';
 import { Sprite, Assets, AnimatedSprite, Texture } from 'pixi.js';
-import { useSpriteheetLoader, type SpritesheetLoaderOptions } from './useSpritesheetLoader';
+import { useSpriteSheetLoader, type SpriteSheetLoaderOptions } from './useSpriteSheetLoader';
 
 const assets: BundlesLoaderOptions = {
     bundles: {
@@ -18,17 +18,17 @@ const assets: BundlesLoaderOptions = {
     }
 }
 
-const cardsSpritesheet: SpritesheetLoaderOptions = {
+const cardsSpritesheet: SpriteSheetLoaderOptions = {
     jsonSrc: 'eample.json'
 }
 
 const initGame = async () => {
-    const { app, onUpdate } = await createApp({
+    const { app, onUpdate } = createApp({
         container: document.querySelector<HTMLDivElement>('#app')!
     });
 
     const bundlesLoader = useBundlesLoader(assets);
-    const spritesheetLoader = useSpriteheetLoader(cardsSpritesheet);
+    const spriteSheetLoader = useSpriteSheetLoader(cardsSpritesheet);
     const { onResize, resize } = useResize({
         app,
         safeGameAreaSize: { width: 960, height: 960 },
@@ -48,8 +48,8 @@ const initGame = async () => {
     await bundlesLoader.loadBundle('loadingScreen');
     const texture = bundlesLoader.getTexture('loadingScreen', 'vite');
 
-    await spritesheetLoader.loadSpritesheet();
-    const spritesheetTexture = spritesheetLoader.getTexture('nameOfASprite')
+    await spriteSheetLoader.loadSpriteSheet();
+    const anotherTexture = spriteSheetLoader.getTexture('nameOfASprite')
 };
 
 initGame();

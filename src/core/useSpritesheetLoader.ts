@@ -1,11 +1,11 @@
 import { Texture, Assets } from 'pixi.js';
 
-export interface SpritesheetLoaderOptions {
+export interface SpriteSheetLoaderOptions {
     jsonSrc: string;
 }
 
 
-interface LoadedSpritesheetData {
+interface LoadedSpriteSheetData {
     data: {
         frames: Array<{ filename: string }>;
     }
@@ -13,42 +13,42 @@ interface LoadedSpritesheetData {
 }
 type ProgressCallback = (progress: number, alias?: string) => void;
 
-interface SpritesheetLoaderAPI {
+interface SpriteSheetLoaderAPI {
     getTexture: (textureName: string) => Texture | undefined;
-    loadSpritesheet: (onProgress?: ProgressCallback) => Promise<void>;
+    loadSpriteSheet: (onProgress?: ProgressCallback) => Promise<void>;
 }
 
 /**
  * 
  * @example
- * const spritesheetLoader = useSpriteheetLoader({
+ * const spriteSheetLoader = useSpriteSheetLoader({
  *     jsonSrc: 'texture_atlas.json'
  * });
- * await spritesheetLoader.loadSpritesheet();
- * const sprite = new Sprite(spritesheetLoader.getTexture('textureNameFromAtlas'))
+ * await spriteSheetLoader.loadSpriteSheet();
+ * const sprite = new Sprite(spriteSheetLoader.getTexture('textureNameFromAtlas'))
  */
-export function useSpriteheetLoader(options: SpritesheetLoaderOptions): SpritesheetLoaderAPI {
+export function useSpriteSheetLoader(options: SpriteSheetLoaderOptions): SpriteSheetLoaderAPI {
 
-    async function loadSpritesheet(onProgress?: ProgressCallback) {
+    async function loadSpriteSheet(onProgress?: ProgressCallback) {
         return Assets.load(options.jsonSrc, onProgress);
     }
 
     function getTexture(textureName: string): Texture | undefined {
-        const spritesheet: LoadedSpritesheetData | undefined = Assets.get(options.jsonSrc);
-        if (!spritesheet) {
+        const spriteSheet: LoadedSpriteSheetData | undefined = Assets.get(options.jsonSrc);
+        if (!spriteSheet) {
             return;
         }
         const regExp = new RegExp(`${textureName}`);
-        const index = spritesheet.data.frames.findIndex((val) => regExp.test(val.filename));
+        const index = spriteSheet.data.frames.findIndex((val) => regExp.test(val.filename));
         if (index < 0) {
             return;
         }
 
-        return spritesheet.textures[index];
+        return spriteSheet.textures[index];
     }
 
     return {
-        loadSpritesheet,
+        loadSpriteSheet,
         getTexture,
     };
 }
