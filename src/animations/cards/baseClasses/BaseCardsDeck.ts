@@ -1,7 +1,7 @@
-import { Container, Sprite, Texture } from "pixi.js";
+import { Container, Texture } from "pixi.js";
 import { BaseCard, type BaseCardProps } from "./BaseCard";
 
-interface CardsDeckProps<Card extends BaseCard = BaseCard> {
+export interface CardsDeckProps<Card extends BaseCard = BaseCard> {
     assets: {
         cards: string[];
         cardBack: string;
@@ -10,15 +10,20 @@ interface CardsDeckProps<Card extends BaseCard = BaseCard> {
     CardCreator: new (props: BaseCardProps) => Card;
 }
 
-export class BaseCardsDeck<Card extends BaseCard = BaseCard> {
+export abstract class BaseCardsDeck<Card extends BaseCard = BaseCard> {
     public view: Container;
     public get cards(): ReadonlyArray<Card> {
         return this._cards;
     }
     protected _cards: Card[];
+    protected _fromContainer: Container;
+    protected _toContainer: Container;
 
     constructor({ assets, getTexture, CardCreator }: CardsDeckProps<Card>) {
         this.view = new Container();
+        this._fromContainer = this.view.addChild(new Container());
+        this._toContainer = this.view.addChild(new Container());
+
         this._cards = [];
 
         const backTexture = getTexture(assets.cardBack);
@@ -32,27 +37,10 @@ export class BaseCardsDeck<Card extends BaseCard = BaseCard> {
             });
 
             this._cards.push(card);
-            this.view.addChild(card.view)
+            this._fromContainer.addChild(card.view)
         });
     }
 
-
-    // layInCircle() {
-    //     let r = 150;
-    //     let rStep = 0.5;
-    //     let angle = 0;
-    //     let angleStep = (Math.PI * 2) / this._cards.length;
-
-    //     this._cards.forEach((val, i) => {
-    //         const x = Math.cos(angle) * r;
-    //         const y = Math.sin(angle) * r;
-    //         val.view.position.set(x, y);
-    //         val.view.rotation = angle + Math.PI / 2;
-
-    //         angle += angleStep;
-    //         r -= rStep;
-
-
-    //     })
-    // }
+    public abstract stack(onFinish: () => void): void;
+    public abstract shuffle(onFinish: () => void): void;
 }

@@ -2,39 +2,52 @@ import type { IPoint, IPointData } from "pixi.js";
 import type { BaseCard } from "../baseClasses/BaseCard";
 import { Easing, Tween, tweenGroup, type BaseAnimator } from "./tweenGroup";
 
-
 export const createMoveAnimation: BaseAnimator<BaseCard> = (card) => {
-
     let tween: Tween | null = null;
-    // const animationProps: {
-    //     from: IPointData | null;
-    //     to: IPointData | null;
-    // } = {
-    //     from: null,
-    //     to: null,
-    // }
+    const animationProps = {
+        startPosition: { x: 0, y: 0 },
+        timePassed: { value: 0 },
+    };
 
-    return {
-        animate(duration: number = 1000, to: IPointData) {
-
-            if (tween) {
-                tween.stop();
-                tweenGroup.remove(tween);
-            }
-
-            const dx = to.x - card.view.position.x;
-            const dy = to.y - card.view.position.y;
-            card.view.position.set(to.x, to.y);
-            card.view.pivot.set(dx, dy);
-
-            tween = new Tween({ x: dx, y: dy }, tweenGroup);
-            tween.to({ x: 0, y: 0 }, duration)
-                .easing(Easing.Cubic.InOut)
-                .onUpdate(({ x, y }: IPointData) => {
-                    card.view.pivot.set(x, y)
-                }).start();
-            return tween;
+    const removeTween = () => {
+        if (tween) {
+            tween.stop();
+            tweenGroup.remove(tween);
         }
     }
 
-}
+    const fn = (from: IPointData, to: IPointData, duration: number) => {
+        return new Tween(from, tweenGroup)
+            .to(to, duration)
+            .easing(Easing.Cubic.InOut)
+            .onUpdate(({ x, y }: IPointData, progress) => {
+                animationProps.timePassed.value = duration * progress;
+                card.view.position.set(x, y);
+            }).start();
+    };
+
+    return {
+        animate(duration: number = 1000, to: IPointData) {
+            removeTween();
+
+            // Save start and end positions for undo
+            animationProps.startPosition = { x: card.view.position.x, y: card.view.position.y };
+
+            tween = fn({ ...animationProps.startPosition }, to, duration);
+
+            // Undo function: animates back to the original position from current state
+            const undo = () => {
+                removeTween();
+                // Move card back to original position
+
+                const undoDuration = animationProps.timePassed.value;
+                tween = fn(
+                    { x: card.view.position.x, y: card.view.position.y },
+                    { ...animationProps.startPosition },
+                    undoDuration);
+            };
+
+            return undo;
+        }
+    };
+};

@@ -6,23 +6,21 @@ import { Easing, Tween, tweenGroup, yoyo, type BaseAnimator } from "./tweenGroup
 export const createJumpAnimation: BaseAnimator<BaseCard> = (card) => {
 
     let tween: Tween | null = null;
-    // const animationProps: {
-    //     from: IPointData | null;
-    //     to: IPointData | null;
-    // } = {
-    //     from: null,
-    //     to: null,
-    // }
+
+    const removeTween = () => {
+        if (tween) {
+            tween.stop();
+            tweenGroup.remove(tween);
+        }
+    }
 
     return {
-        animate(duration: number = 500, offset: number = 30) {
+        animate(duration: number = 500, offset: number = 30, onComplete = () => { }) {
 
-            if (tween) {
-                tween.stop();
-                tweenGroup.remove(tween);
-            }
+            removeTween();
+
             const from = { value: 0, alpha: card.shadow.alpha, scale: card.shadow.scale.x };
-            const to = { value: offset, alpha: card.shadow.alpha * 0.4, scale: card.shadow.scale.x * 0.8 };
+            const to = { value: offset, alpha: card.shadow.alpha * 0.4, scale: card.shadow.scale.x * 1.1 };
 
 
             tween = new Tween(from, tweenGroup);
@@ -37,8 +35,13 @@ export const createJumpAnimation: BaseAnimator<BaseCard> = (card) => {
                     card.body.pivot.y = value;
 
 
-                }).start();
-            return tween;
+                })
+                .onComplete(onComplete)
+                .start();
+            const undo = () => {
+                removeTween();
+            };
+            return undo;
         }
     }
 
