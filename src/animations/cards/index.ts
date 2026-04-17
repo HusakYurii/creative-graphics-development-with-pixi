@@ -11,6 +11,10 @@ import { useSpriteSheetLoader, type SpriteSheetLoaderOptions } from "../../core/
 import { SimpleShuffle } from "./examples/SimpleShuffle";
 import { SimpleShuffleBackwards } from "./examples/SimpleShuffleBackwards";
 import { ShuffleWithFlip } from "./examples/ShuffleWithFlip";
+import { ShuffleWithSGFlip } from "./examples/ShuffleWithSGFlip";
+import { AnimatedCard2 } from "./examples/AnimatedCard2";
+import { SlideInShuffle } from "./examples/SlideInShuffle";
+import { SlideAndFlipShuffle } from "./examples/SlideAndFlipShuffle";
 
 const assets: BundlesLoaderOptions = {
     bundles: {
@@ -60,39 +64,53 @@ const initGame = async () => {
 
     // gameContainer.addChild(table);
 
-
-    const simpleShuffle = new SimpleShuffle({
+    const commonProps = {
         assets: {
             cardBack: assetNames.cardBack,
             cards: assetNames.cards
         },
         getTexture: spriteSheetLoader.getTexture,
         CardCreator: AnimatedCard
+    };
+
+    const simpleShuffle = new SimpleShuffle({
+        ...commonProps,
     });
     simpleShuffle.view.position.set(-350, -370);
     gameContainer.addChild(simpleShuffle.view);
 
     const simpleShuffleBackwards = new SimpleShuffleBackwards({
-        assets: {
-            cardBack: assetNames.cardBack,
-            cards: assetNames.cards
-        },
-        getTexture: spriteSheetLoader.getTexture,
-        CardCreator: AnimatedCard
+        ...commonProps,
     });
     simpleShuffleBackwards.view.position.set(-350, -120);
     gameContainer.addChild(simpleShuffleBackwards.view);
 
     const simpleWithFlip = new ShuffleWithFlip({
-        assets: {
-            cardBack: assetNames.cardBack,
-            cards: assetNames.cards
-        },
-        getTexture: spriteSheetLoader.getTexture,
-        CardCreator: AnimatedCard
+        ...commonProps,
     });
     simpleWithFlip.view.position.set(-350, 120);
     gameContainer.addChild(simpleWithFlip.view);
+
+    const simpleWithSGFlip = new ShuffleWithSGFlip({
+        ...commonProps,
+        CardCreator: AnimatedCard2
+    });
+    simpleWithSGFlip.view.position.set(-350, 370);
+    gameContainer.addChild(simpleWithSGFlip.view);
+
+    const slideInShuffle = new SlideInShuffle({
+        ...commonProps,
+        CardCreator: AnimatedCard
+    });
+    slideInShuffle.view.position.set(200, -370);
+    gameContainer.addChild(slideInShuffle.view);
+
+    const slideAndFlipShuffle = new SlideAndFlipShuffle({
+        ...commonProps,
+        CardCreator: AnimatedCard
+    });
+    slideAndFlipShuffle.view.position.set(200, -120);
+    gameContainer.addChild(slideAndFlipShuffle.view);
 
     // const cardHighlight = new CardHighlight({
     //     textures: assetNames.highlight.map(name => spritesheetLoader.getTexture(name) || Texture.EMPTY)

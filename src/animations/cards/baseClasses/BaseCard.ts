@@ -29,7 +29,6 @@ export abstract class BaseCard {
         this.shadow = this.view.addChild(new Container());
         this.shadow.addChild(actualShadowSprite);
 
-
         this.body = this.view.addChild(new Container());
 
         this.back = this.body.addChild(new Sprite(back));
@@ -41,7 +40,11 @@ export abstract class BaseCard {
         this.front.visible = this.isOpen;
         this.back.visible = !this.isOpen;
     }
-
+    reset() {
+        this.isOpen = false;
+        this.front.visible = this.isOpen;
+        this.back.visible = !this.isOpen;
+    }
     abstract flip(): void;
     abstract unflip(): void;
     abstract move(to: IPointData): void

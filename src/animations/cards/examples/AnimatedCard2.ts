@@ -1,14 +1,13 @@
 import type { IPointData } from "pixi.js";
 import { BaseCard, type BaseCardProps } from "../baseClasses/BaseCard";
-import { createSimpleFlipAnimation } from "../tweens/createSimpleFlipAnimation";
+import { createSGFlipAnimation } from "../tweens/createSGFlipAnimation";
 import { createMoveAnimation } from "../tweens/createMoveAnimation";
 import { createJumpAnimation } from "../tweens/createJumpAnimation";
 
-
 const ANIMATION_TIME = 800;
-export class AnimatedCard extends BaseCard {
+export class AnimatedCard2 extends BaseCard {
 
-    private _flipAnimation: ReturnType<typeof createSimpleFlipAnimation>;
+    private _flipAnimation: ReturnType<typeof createSGFlipAnimation>;
     private _flipAnimationUndo: Function | null = null;
 
     private _moveAnimation: ReturnType<typeof createMoveAnimation>;
@@ -20,10 +19,9 @@ export class AnimatedCard extends BaseCard {
     constructor(props: BaseCardProps) {
         super(props);
 
-        this._flipAnimation = createSimpleFlipAnimation(this);
+        this._flipAnimation = createSGFlipAnimation(this);
         this._moveAnimation = createMoveAnimation(this);
         this._jumpAnimation = createJumpAnimation(this);
-
     }
 
     flip(time = ANIMATION_TIME) {

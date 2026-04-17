@@ -7,22 +7,22 @@ export class Button {
         this.view = new Container();
 
         const text = new Text('Hover to Play', {
-            fontSize: 16,
+            fontSize: 18,
             fill: '#ffffff',
             align: 'center',
         });
         text.anchor.set(0.5);
-        text.position.set(120 / 2, 30 / 2);
+        text.position.set(169 / 2, 36 / 2);
 
         const button = new Graphics();
         button.beginFill(0x3366ff);
-        button.drawRoundedRect(0, 0, 120, 30, 5);
+        button.drawRoundedRect(0, 0, 169, 36, 8);
         button.endFill();
 
         this.view.addChild(button);
         this.view.addChild(text);
 
-        this.view.hitArea = new Rectangle(0, 0, 120, 30,)
+        this.view.hitArea = new Rectangle(0, 0, 169, 36)
         this.view.eventMode = 'static';
         this.view.interactiveChildren = false;
     }
