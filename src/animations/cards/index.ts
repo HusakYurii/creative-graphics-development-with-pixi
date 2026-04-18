@@ -5,7 +5,7 @@ import { useResize } from "../../core/useResize";
 import { BaseCardsDeck } from "./baseClasses/BaseCardsDeck";
 import { assetNames } from "./cardsDeckConfig";
 import { CardHighlight } from "./baseClasses/CardHighlight";
-import { tweenGroup } from "./tweens/tweenGroup";
+import { tweenGroup } from "../../core/tweenGroup";
 import { AnimatedCard } from "./examples/AnimatedCard";
 import { useSpriteSheetLoader, type SpriteSheetLoaderOptions } from "../../core/useSpriteSheetLoader";
 import { SimpleShuffle } from "./examples/SimpleShuffle";
@@ -19,10 +19,10 @@ import { SlideAndFlipShuffle } from "./examples/SlideAndFlipShuffle";
 const assets: BundlesLoaderOptions = {
     bundles: {
         loadingScreen: [
-            {
-                alias: 'table',
-                src: 'table.jpg'
-            },
+            // {
+            //     alias: 'table',
+            //     src: 'table.webp'
+            // },
             {
                 alias: 'cardShadow',
                 src: 'cardShadow.png'

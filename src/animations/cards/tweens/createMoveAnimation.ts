@@ -1,6 +1,6 @@
 import type { IPoint, IPointData } from "pixi.js";
 import type { BaseCard } from "../baseClasses/BaseCard";
-import { Easing, Tween, tweenGroup, type BaseAnimator } from "./tweenGroup";
+import { Easing, Tween, tweenGroup, type BaseAnimator } from "../../../core/tweenGroup";
 
 export const createMoveAnimation: BaseAnimator<BaseCard> = (card) => {
     let tween: Tween | null = null;

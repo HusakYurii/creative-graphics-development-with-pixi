@@ -1,6 +1,6 @@
 import { BaseCardsDeck, type CardsDeckProps } from "../baseClasses/BaseCardsDeck";
 import type { AnimatedCard } from "./AnimatedCard";
-import { Easing, Tween, tweenGroup, wait, waitAsync } from "../tweens/tweenGroup";
+import { Easing, Tween, tweenGroup, wait, waitAsync } from "../../../core/tweenGroup";
 import { Graphics, Rectangle, type IPointData } from "pixi.js";
 import { Button } from "./Button";
 

@@ -1,5 +1,5 @@
 import type { BaseCard } from "../baseClasses/BaseCard";
-import { Easing, Tween, tweenGroup, type BaseAnimator } from "./tweenGroup";
+import { Easing, Tween, tweenGroup, type BaseAnimator } from "../../../core/tweenGroup";
 
 
 export const createSimpleFlipAnimation: BaseAnimator<BaseCard> = (card) => {

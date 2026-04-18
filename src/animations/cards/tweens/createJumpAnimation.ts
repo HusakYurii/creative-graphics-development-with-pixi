@@ -1,6 +1,6 @@
 import type { IPoint, IPointData } from "pixi.js";
 import type { BaseCard } from "../baseClasses/BaseCard";
-import { Easing, Tween, tweenGroup, yoyo, type BaseAnimator } from "./tweenGroup";
+import { Easing, Tween, tweenGroup, yoyo, type BaseAnimator } from "../../../core/tweenGroup";
 
 
 export const createJumpAnimation: BaseAnimator<BaseCard> = (card) => {
