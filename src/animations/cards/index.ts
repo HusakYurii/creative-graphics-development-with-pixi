@@ -19,14 +19,11 @@ import { SlideAndFlipShuffle } from "./examples/SlideAndFlipShuffle";
 const assets: BundlesLoaderOptions = {
     bundles: {
         loadingScreen: [
-            // {
-            //     alias: 'table',
-            //     src: 'table.webp'
-            // },
             {
-                alias: 'cardShadow',
-                src: 'cardShadow.png'
-            }
+                alias: 'table',
+                src: 'table.webp'
+            },
+
         ],
         introScreen: [],
         gameScreen: [],
