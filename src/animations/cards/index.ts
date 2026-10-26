@@ -5,7 +5,7 @@ import { useResize } from "../../core/useResize";
 import { BaseCardsDeck } from "./baseClasses/BaseCardsDeck";
 import { assetNames } from "./cardsDeckConfig";
 import { CardHighlight } from "./baseClasses/CardHighlight";
-import { tweenGroup } from "../../core/tweenGroup";
+import { updateTweens } from "../../core/tweenGroup";
 import { AnimatedCard } from "./examples/AnimatedCard";
 import { useSpriteSheetLoader, type SpriteSheetLoaderOptions } from "../../core/useSpriteSheetLoader";
 import { SimpleShuffle } from "./examples/SimpleShuffle";
@@ -124,7 +124,7 @@ const initGame = async () => {
     });
 
     onUpdate((ticker) => {
-        tweenGroup.update(ticker.lastTime);
+        updateTweens(ticker.lastTime);
     });
 
     resize();

@@ -1,4 +1,4 @@
-import { Group, Tween, Easing, Interpolation } from '@tweenjs/tween.js'
+import { Group, Tween, Easing, Interpolation, now } from '@tweenjs/tween.js'
 
 type BaseAnimator<T extends any, P extends any[] = any[]> = (target: T) => {
     animate: (duration?: number, ...args: P) => () => void;
@@ -23,6 +23,11 @@ new TWEEN.Tween({ x: 0 })
   //.yoyo(true)
   .easing(yoyo(t => TWEEN.Easing.Cubic.InOut(t)))
 */
+
+
+export const updateTweens = (timeMS: number = now()) => {
+    tweenGroup.update(timeMS);
+}
 
 export const wait = (time: number, cb: () => any) => {
     new Tween({}, tweenGroup).to({}, time).onComplete(cb).start();

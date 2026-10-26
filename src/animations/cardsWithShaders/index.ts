@@ -2,7 +2,7 @@ import { Container, Graphics } from "pixi.js";
 import { createApp } from "../../core/createApp";
 import { type BundlesLoaderOptions, useBundlesLoader } from "../../core/useBundlesLoader";
 import { useResize } from "../../core/useResize";
-import { tweenGroup } from "../../core/tweenGroup";
+import { updateTweens } from "../../core/tweenGroup";
 import { ShuffleWithFlip } from "./examples/ShuffleWithFlip";
 import { assetNames } from "./cardsDeckConfig";
 import { AnimatedCard } from "./examples/AnimatedCard";
@@ -100,7 +100,7 @@ const initGame = async () => {
     });
 
     onUpdate((ticker) => {
-        tweenGroup.update(ticker.lastTime);
+        updateTweens(ticker.lastTime);
     });
 
     resize();

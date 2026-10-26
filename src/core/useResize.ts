@@ -10,10 +10,10 @@ interface CurrentSizes {
     canvas: Readonly<ISize>;
 }
 
-type OnReeizeCallback = (sizes: Readonly<CurrentSizes>) => void;
+type OnResizeCallback = (sizes: Readonly<CurrentSizes>) => void;
 
-type UnsubscibeCallback = () => void;
-type OnResize = (callback: OnReeizeCallback) => UnsubscibeCallback;
+type UnsubscribeCallback = () => void;
+type OnResize = (callback: OnResizeCallback) => UnsubscribeCallback;
 
 export interface UseResizeOptions {
     app: Application<HTMLCanvasElement>;
@@ -22,6 +22,10 @@ export interface UseResizeOptions {
      * If true, the resize will be triggered immediately during the hook initialization. Default is true.
      */
     immediate?: boolean;
+    /**
+     * How long to wait, in milliseconds, after the last observed size change before resizing. Default is 100.
+     */
+    debounceMS?: number;
 }
 export interface ResizeAPI {
     disconnect: () => void;
@@ -30,10 +34,10 @@ export interface ResizeAPI {
     getCurrentSizes: () => Readonly<CurrentSizes>;
 }
 
-export function useResize({ app, safeGameAreaSize, immediate = true }: UseResizeOptions): ResizeAPI {
+export function useResize({ app, safeGameAreaSize, immediate = true, debounceMS = 100 }: UseResizeOptions): ResizeAPI {
     // Get the parent element directly from the canvas
     const root = app.view.parentElement;
-    const resizeHablders = new Set<OnReeizeCallback>();
+    const resizeHandlers = new Set<OnResizeCallback>();
     let currentSizes = {
         game: {
             width: 0,
@@ -106,7 +110,7 @@ export function useResize({ app, safeGameAreaSize, immediate = true }: UseResize
             }
         };
         // 5.Update all listeners
-        resizeHablders.forEach(callback => {
+        resizeHandlers.forEach(callback => {
             callback(currentSizes)
         });
     };
@@ -121,7 +125,7 @@ export function useResize({ app, safeGameAreaSize, immediate = true }: UseResize
     const handleResize = () => {
         if (needResize) {
             timePassed += app.ticker.deltaMS;
-            if (timePassed > 100) {
+            if (timePassed > debounceMS) {
                 needResize = false;
                 timePassed = 0;
                 resize();
@@ -140,13 +144,13 @@ export function useResize({ app, safeGameAreaSize, immediate = true }: UseResize
     const getCurrentSizes: () => Readonly<CurrentSizes> = () => currentSizes;
 
     const onResize: OnResize = (callback) => {
-        resizeHablders.add(callback);
-        return () => resizeHablders.delete(callback);
+        resizeHandlers.add(callback);
+        return () => resizeHandlers.delete(callback);
     }
 
     const disconnect = () => {
         observer.disconnect();
-        resizeHablders.clear();
+        resizeHandlers.clear();
         app.ticker.remove(handleResize)
     };
 

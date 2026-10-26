@@ -14,6 +14,10 @@ export interface CreateAppOptions {
     container?: HTMLElement;
     background?: ColorSource;
     antialias?: boolean;
+    /**
+     * Drop this one if you use your own resize logic
+     */
+    resizeTo?: boolean;
 }
 
 interface ApplicationAPI {
@@ -26,7 +30,7 @@ export function createApp(options: CreateAppOptions = {}): ApplicationAPI {
     const container = options.container ?? document.body;
 
     const app = new Application<HTMLCanvasElement>({
-        resizeTo: container === document.body ? window : container,
+        resizeTo: !options.resizeTo ? undefined : container === document.body ? window : container,
         backgroundColor: options.background ?? '#c2c2c2',
         antialias: options.antialias ?? true,
         resolution: Math.min(window.devicePixelRatio, 2),

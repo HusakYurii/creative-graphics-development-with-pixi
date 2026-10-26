@@ -6,7 +6,7 @@ import { type SpriteSheetLoaderOptions, useSpriteSheetLoader } from "../../core/
 import { createMeshWithShader } from "./createMeshWithShader";
 import { ProductCard } from "./ProductCard";
 import { FirstExample } from "./FirstExample";
-import { tweenGroup } from "../../core/tweenGroup";
+import { updateTweens } from "../../core/tweenGroup";
 import { SecondExample } from "./SecondExample";
 import { StarsContainer } from "./Stars";
 
@@ -200,7 +200,7 @@ const initGame = async () => {
 
     onUpdate((ticker) => {
         // uniforms.uTime = ticker.lastTime * 0.0001;
-        tweenGroup.update(ticker.lastTime);
+        updateTweens(ticker.lastTime);
         starsContainer.update(ticker.deltaMS)
     });
 

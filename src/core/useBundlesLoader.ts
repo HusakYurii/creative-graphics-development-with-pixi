@@ -65,7 +65,6 @@ export function useBundlesLoader(options: BundlesLoaderOptions): BundlesLoaderAP
 
     async function loadBundle(key: BundleNames, onProgress?: ProgressCallback) {
         await init();
-        // const bundle: Record<string, Texture> = await Assets.loadBundle(key, onProgress);
         return await Assets.loadBundle(key, onProgress);
     }
 
