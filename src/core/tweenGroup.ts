@@ -1,4 +1,4 @@
-import { Group, Tween, Easing } from '@tweenjs/tween.js'
+import { Group, Tween, Easing, Interpolation } from '@tweenjs/tween.js'
 
 type BaseAnimator<T extends any, P extends any[] = any[]> = (target: T) => {
     animate: (duration?: number, ...args: P) => () => void;
@@ -38,5 +38,6 @@ export {
     tweenGroup,
     Tween,
     Easing,
+    Interpolation,
     type BaseAnimator
 }

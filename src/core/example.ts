@@ -3,6 +3,7 @@ import { useBundlesLoader, type BundlesLoaderOptions } from './useBundlesLoader'
 import { useResize } from './useResize';
 import { Sprite, Assets, AnimatedSprite, Texture } from 'pixi.js';
 import { useSpriteSheetLoader, type SpriteSheetLoaderOptions } from './useSpriteSheetLoader';
+import { tweenGroup } from './tweenGroup';
 
 const assets: BundlesLoaderOptions = {
     bundles: {
@@ -40,7 +41,7 @@ const initGame = async () => {
     });
 
     onUpdate((ticker) => {
-
+        tweenGroup.update(ticker.lastTime);
     });
 
     resize();
